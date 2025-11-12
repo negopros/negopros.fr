@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
-import { BookOpen, Download, Star, CheckCircle, ChevronDown, ChevronUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { BookOpen, Download, Star, CheckCircle, ChevronDown, ChevronUp, XCircle } from 'lucide-react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
 import { SEO } from '../components/SEO';
 import { chaptersList, chaptersListAchats } from '../data/ebookMeta';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAnalytics } from '../hooks/useAnalytics';
+import toast from 'react-hot-toast';
 
 const ebooks = [
   {
@@ -57,8 +58,23 @@ const ebooks = [
 
 export function Ebooks() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [expandedIndex, setExpandedIndex] = useState<boolean>(true);
+  const [showDownloadModal, setShowDownloadModal] = useState(false);
   const { trackEvent } = useAnalytics();
+
+  const success = searchParams.get('success');
+  const canceled = searchParams.get('canceled');
+  const productId = searchParams.get('product');
+
+  useEffect(() => {
+    if (success === 'true' && productId) {
+      setShowDownloadModal(true);
+      toast.success('Paiement réussi ! Téléchargez votre ebook ci-dessous.');
+    } else if (canceled === 'true') {
+      toast.error('Paiement annulé.');
+    }
+  }, [success, canceled, productId]);
 
   const handleBuyClick = (ebookId: string | number) => {
     const ebook = ebooks.find(e => e.id === ebookId);
@@ -76,6 +92,22 @@ export function Ebooks() {
     setExpandedIndex(!expandedIndex);
   };
 
+  const getDownloadUrl = () => {
+    if (productId === 'negociation-pme') {
+      return '/ebook_negociation_pme (1).pdf';
+    } else if (productId === 'negociation-achats') {
+      return '/ebook_negociation_acheteur_2025.pdf';
+    }
+    return null;
+  };
+
+  const getEbookTitle = () => {
+    const ebook = ebooks.find(e => e.id === productId);
+    return ebook?.title || 'Votre ebook';
+  };
+
+  const downloadUrl = getDownloadUrl();
+
   return (
     <div className="min-h-screen pt-20 bg-gray-50 dark:bg-gray-900">
       <SEO
@@ -83,6 +115,70 @@ export function Ebooks() {
         description="Bibliothèque d'e-books gratuits et payants sur la négociation. Guides pratiques pour dirigeants de PME, acheteurs et professionnels."
         keywords="ebook négociation, guide négociation gratuit, formation négociation pme, livre négociation"
       />
+
+      {showDownloadModal && downloadUrl && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-8 max-w-md w-full relative"
+          >
+            <button
+              onClick={() => {
+                setShowDownloadModal(false);
+                navigate('/ebooks', { replace: true });
+              }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+            >
+              <XCircle className="w-6 h-6" />
+            </button>
+
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full mb-6">
+                <CheckCircle className="w-8 h-8 text-green-600 dark:text-green-400" />
+              </div>
+
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Paiement réussi !
+              </h2>
+
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
+                Merci pour votre achat de <strong>{getEbookTitle()}</strong>
+              </p>
+
+              <a
+                href={downloadUrl}
+                download
+                onClick={() => {
+                  trackEvent('ebook_download', 'conversion', {
+                    ebookId: productId,
+                    ebookTitle: getEbookTitle(),
+                  });
+                }}
+                className="inline-flex items-center justify-center w-full px-6 py-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-800 transition-all mb-4"
+              >
+                <Download className="w-5 h-5 mr-2" />
+                Télécharger mon ebook
+              </a>
+
+              <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
+                Vous recevrez également un email de confirmation avec le lien de téléchargement.
+              </p>
+
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  setShowDownloadModal(false);
+                  navigate('/ebooks', { replace: true });
+                }}
+              >
+                Fermer
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      )}
 
       <section className="py-16 bg-gradient-to-br from-[#0A2647] to-[#144272]">
         <div className="container mx-auto px-4">
