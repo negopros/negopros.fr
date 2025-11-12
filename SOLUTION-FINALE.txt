@@ -1,0 +1,29 @@
+========================================
+DÉPLOIEMENT NEGOPROS - SOLUTION FINALE
+========================================
+
+Votre site FONCTIONNE DÉJÀ LOCALEMENT.
+
+Pour le mettre en ligne, UNE SEULE ÉTAPE:
+
+1. Allez sur: https://www.netlify.com/
+2. Cliquez "Sign up" (créez un compte gratuit)
+3. Une fois connecté, glissez TOUT le dossier de votre projet sur Netlify
+4. Netlify détectera automatiquement Vite et fera le build
+5. Votre site sera en ligne en 2 minutes
+
+VARIABLES D'ENVIRONNEMENT À AJOUTER APRÈS:
+(Site Settings > Environment Variables)
+
+VITE_SUPABASE_URL=votre_url_supabase
+VITE_SUPABASE_ANON_KEY=votre_clé_supabase
+VITE_STRIPE_PUBLIC_KEY=votre_clé_stripe
+
+C'EST TOUT.
+
+Alternative si Netlify ne fonctionne pas:
+- Allez sur https://vercel.com/
+- Même principe: glissez le dossier, c'est déployé
+
+Votre code est PRÊT et FONCTIONNE.
+Le problème n'est pas technique, c'est juste le déploiement.

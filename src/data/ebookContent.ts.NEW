@@ -1,0 +1,29 @@
+export interface EbookChapter {
+  id: string;
+  title: string;
+  content: string;
+  sections?: EbookSection[];
+}
+
+export interface EbookSection {
+  id: string;
+  title: string;
+}
+
+export const ebookMetadata = {
+  title: 'La Négociation pour le Dirigeant de PME',
+  subtitle: 'Guide Complet et Pratique',
+  description: 'Stratégies, Techniques et Outils issus des meilleures références internationales',
+  authors: 'Basé sur les travaux de Roger Fisher, William Ury, Chris Voss, Robert Cialdini, Daniel Kahneman, Lionel Bellenger, Alain Pekar Lempereur et Paul Ekman',
+};
+
+// CE FICHIER CONTIENT LE CONTENU COMPLET - EN COURS DE GÉNÉRATION
+// Fichier temporaire - sera remplacé par la version complète
+
+export const ebookChapters: EbookChapter[] = [
+  {
+    id: 'temp',
+    title: 'Contenu en cours de génération',
+    content: 'Le contenu complet est en cours d\'intégration...'
+  }
+];

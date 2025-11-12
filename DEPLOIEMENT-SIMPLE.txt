@@ -1,0 +1,47 @@
+═══════════════════════════════════════════════════════════════
+   DÉPLOYER NEGOPROS.FR - LA MÉTHODE LA PLUS SIMPLE
+═══════════════════════════════════════════════════════════════
+
+MÉTHODE RECOMMANDÉE : NETLIFY (gratuit et sans compte requis au début)
+
+ÉTAPE 1 : Préparer les fichiers
+---------------------------------
+Votre projet est déjà prêt ! Le dossier "dist" contient votre site.
+
+ÉTAPE 2 : Déployer (2 minutes chrono)
+--------------------------------------
+1. Ouvrez votre navigateur
+2. Allez sur : https://app.netlify.com/drop
+3. Glissez-déposez le DOSSIER ENTIER "dist" sur la page
+4. C'est fait ! Votre site est en ligne
+
+Netlify vous donnera une adresse temporaire comme :
+→ random-name-123456.netlify.app
+
+ÉTAPE 3 : Connecter votre domaine negopros.fr (optionnel)
+----------------------------------------------------------
+1. Créez un compte gratuit sur Netlify
+2. Allez dans "Domain settings"
+3. Cliquez sur "Add custom domain"
+4. Entrez "negopros.fr"
+5. Suivez les instructions DNS (à configurer chez votre registraire)
+
+IMPORTANT : Variables d'environnement
+--------------------------------------
+Pour que votre site fonctionne complètement, vous devrez ajouter
+les variables d'environnement dans Netlify :
+
+Dans Site settings → Environment variables, ajoutez :
+- VITE_SUPABASE_URL = https://nuauoexinghwtsijzzqi.supabase.co
+- VITE_SUPABASE_ANON_KEY = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51YXVvZXhpbmdod3RzaWp6enFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2NDI4OTQsImV4cCI6MjA3NzIxODg5NH0.cK_2YF6-AeEKlKFcfuJ5kVsexJBvmmf30cZj9qz47Q0
+
+Puis redéployez le site.
+
+═══════════════════════════════════════════════════════════════
+
+BESOIN D'AIDE ?
+- Le dossier "dist" se trouve dans votre projet
+- Si vous ne le voyez pas, lancez "npm run build" dans le terminal
+- Tout le site est déjà construit et prêt à déployer !
+
+═══════════════════════════════════════════════════════════════

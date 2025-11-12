@@ -1,0 +1,126 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error('Missing Supabase environment variables');
+}
+
+export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+export interface Contact {
+  id?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  subject: string;
+  message: string;
+  status?: 'new' | 'in_progress' | 'contacted' | 'closed';
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface NewsletterSubscriber {
+  id?: string;
+  email: string;
+  status?: 'active' | 'unsubscribed';
+  subscribed_at?: string;
+  unsubscribed_at?: string;
+}
+
+export const contactService = {
+  async create(contact: Omit<Contact, 'id' | 'created_at' | 'updated_at' | 'status'>) {
+    const { data, error } = await supabase
+      .from('contacts')
+      .insert([contact])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async getAll() {
+    const { data, error } = await supabase
+      .from('contacts')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async updateStatus(id: string, status: Contact['status']) {
+    const { data, error } = await supabase
+      .from('contacts')
+      .update({ status })
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+};
+
+export const newsletterService = {
+  async subscribe(email: string) {
+    const { data: existing } = await supabase
+      .from('newsletter_subscribers')
+      .select('id, status')
+      .eq('email', email)
+      .maybeSingle();
+
+    if (existing) {
+      if (existing.status === 'unsubscribed') {
+        const { data, error } = await supabase
+          .from('newsletter_subscribers')
+          .update({ status: 'active', unsubscribed_at: null })
+          .eq('id', existing.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data;
+      }
+      throw new Error('Email already subscribed');
+    }
+
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .insert([{ email }])
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async unsubscribe(email: string) {
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .update({
+        status: 'unsubscribed',
+        unsubscribed_at: new Date().toISOString()
+      })
+      .eq('email', email)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+
+  async getAll() {
+    const { data, error } = await supabase
+      .from('newsletter_subscribers')
+      .select('*')
+      .eq('status', 'active')
+      .order('subscribed_at', { ascending: false });
+
+    if (error) throw error;
+    return data;
+  },
+};

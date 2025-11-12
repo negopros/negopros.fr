@@ -1,0 +1,109 @@
+═══════════════════════════════════════════════════════════════
+   🚀 DÉPLOYER NEGOPROS.FR - GUIDE ULTRA-SIMPLE
+═══════════════════════════════════════════════════════════════
+
+Votre site est PRÊT et construit dans le dossier "dist"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPTION 1 : NETLIFY DROP (LA PLUS SIMPLE - 2 MINUTES)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Aucune installation requise
+✅ Aucune ligne de commande
+✅ Gratuit
+
+ÉTAPES :
+1. Ouvrez votre navigateur
+2. Allez sur : https://app.netlify.com/drop
+3. Ouvrez le dossier de votre projet
+4. Trouvez le dossier "dist"
+5. Glissez-déposez TOUT LE DOSSIER "dist" sur la page Netlify
+6. TERMINÉ ! Votre site est en ligne
+
+Netlify vous donnera une URL comme : random-name-123.netlify.app
+
+Pour connecter votre domaine negopros.fr :
+→ Créez un compte gratuit sur Netlify
+→ Allez dans "Domain settings" > "Add custom domain"
+→ Suivez les instructions DNS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPTION 2 : VERCEL (RECOMMANDÉ POUR PROJETS REACT)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ Optimisé pour React
+✅ Très rapide
+✅ Gratuit
+
+ÉTAPES :
+1. Allez sur : https://vercel.com
+2. Cliquez "Sign Up" (gratuit avec email ou GitHub)
+3. Cliquez "Add New..." > "Project"
+4. Cliquez "Import" ou glissez-déposez le dossier de votre projet
+5. Vercel détecte automatiquement que c'est un projet Vite
+6. Cliquez "Deploy"
+7. TERMINÉ !
+
+Pour connecter votre domaine negopros.fr :
+→ Dans votre projet Vercel : Settings > Domains
+→ Ajoutez "negopros.fr"
+→ Suivez les instructions DNS
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠️ IMPORTANT : VARIABLES D'ENVIRONNEMENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Pour que votre site fonctionne complètement (base de données, etc.),
+vous DEVEZ ajouter ces variables d'environnement :
+
+Sur Netlify : Site settings > Environment variables
+Sur Vercel : Settings > Environment Variables
+
+Ajoutez :
+
+VITE_SUPABASE_URL
+https://nuauoexinghwtsijzzqi.supabase.co
+
+VITE_SUPABASE_ANON_KEY
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im51YXVvZXhpbmdod3RzaWp6enFpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2NDI4OTQsImV4cCI6MjA3NzIxODg5NH0.cK_2YF6-AeEKlKFcfuJ5kVsexJBvmmf30cZj9qz47Q0
+
+Puis redéployez le site (ou attendez le prochain déploiement automatique).
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🆘 BESOIN D'AIDE ?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Problème : "Je ne trouve pas le dossier dist"
+Solution :
+  - Le dossier "dist" est dans votre projet
+  - Il peut être caché sur Mac (fichiers commençant par un point)
+  - Sur Windows : Activez l'affichage des fichiers cachés
+  - Ou utilisez l'archive "negopros-site.tar.gz" que j'ai créée
+
+Problème : "Le site ne s'affiche pas correctement"
+Solution :
+  - Vérifiez que vous avez ajouté les variables d'environnement
+  - Attendez 1-2 minutes après le déploiement
+  - Videz le cache de votre navigateur (Ctrl+F5 ou Cmd+Shift+R)
+
+Problème : "Comment configurer mon DNS ?"
+Solution :
+  - Connectez-vous à votre registraire de domaine (où vous avez acheté negopros.fr)
+  - Netlify/Vercel vous donnera des instructions DNS précises
+  - Généralement : Ajoutez un enregistrement CNAME pointant vers leur serveur
+
+═══════════════════════════════════════════════════════════════
+
+🎉 VOTRE SITE EST PRÊT À DÉPLOYER !
+
+Choisissez l'option 1 (Netlify) si vous voulez la solution la plus
+simple et rapide sans créer de compte.
+
+Choisissez l'option 2 (Vercel) si vous voulez la meilleure performance
+et que créer un compte ne vous dérange pas.
+
+═══════════════════════════════════════════════════════════════

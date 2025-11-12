@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif;
+    @apply font-bold;
+  }
+}
+
+@layer utilities {
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  .highlight-box {
+    @apply rounded-lg p-6 my-6 border-l-4;
+  }
+
+  .highlight-box.info {
+    @apply bg-blue-50 dark:bg-blue-900/20 border-blue-500;
+  }
+
+  .highlight-box.tip {
+    @apply bg-amber-50 dark:bg-amber-900/20 border-amber-500;
+  }
+
+  .highlight-box.warning {
+    @apply bg-red-50 dark:bg-red-900/20 border-red-500;
+  }
+}

@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://negopros.fr/sitemap.xml
+
+# Disallow admin/internal pages if any
+Disallow: /admin/
+Disallow: /.netlify/

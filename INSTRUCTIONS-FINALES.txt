@@ -1,0 +1,60 @@
+================================
+INSTRUCTIONS FINALES - SIMPLE
+================================
+
+Votre site est PRÊT et FONCTIONNE.
+
+FICHIER À UTILISER: negopros-production.tar.gz (dans ce projet)
+
+----------------------------------
+OPTION 1 - GitHub Pages (GRATUIT)
+----------------------------------
+
+1. Allez sur https://github.com/ et connectez-vous
+2. Créez un nouveau repository (appelez-le "negopros")
+3. Décompressez negopros-production.tar.gz
+4. Dans le dossier "dist/" qui apparaît :
+
+   git init
+   git add .
+   git commit -m "Site"
+   git branch -M main
+   git remote add origin https://github.com/VOTRE-USERNAME/negopros.git
+   git push -u origin main
+
+5. Sur GitHub, allez dans Settings > Pages
+6. Source: Deploy from branch "main", folder: /(root)
+7. Votre site sera sur: https://VOTRE-USERNAME.github.io/negopros/
+
+----------------------------------
+OPTION 2 - Surge.sh (LE PLUS SIMPLE)
+----------------------------------
+
+1. Décompressez negopros-production.tar.gz
+2. Ouvrez le terminal dans le dossier "dist/"
+3. Tapez: npx surge
+4. Appuyez sur Entrée deux fois
+5. Votre site est EN LIGNE immédiatement!
+
+----------------------------------
+OPTION 3 - Render (SIMPLE)
+----------------------------------
+
+1. Allez sur https://render.com/
+2. Créez un compte gratuit
+3. "New" > "Static Site"
+4. Glissez le dossier "dist/" (décompressé)
+5. C'est en ligne!
+
+==============================
+IMPORTANT
+==============================
+
+Après déploiement, vous devrez ajouter les variables d'environnement :
+- VITE_SUPABASE_URL
+- VITE_SUPABASE_ANON_KEY
+- VITE_STRIPE_PUBLIC_KEY
+
+(Copiez-les depuis votre fichier .env)
+
+Le code fonctionne. Le problème n'est plus technique.
