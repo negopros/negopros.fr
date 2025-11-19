@@ -14,7 +14,7 @@ const DEFAULT_SEO = {
   title: 'NegoPros - Expert en Négociation Stratégique | Formation & Coaching',
   description: 'Expert en négociation stratégique depuis 15 ans. Formations, coaching personnalisé et consulting pour professionnels et entreprises. Méthode éprouvée avec résultats mesurables. Devenez un négociateur performant.',
   keywords: 'négociation professionnelle, formation négociation entreprise, coaching négociation stratégique, expert négociateur, techniques de négociation avancées, formation négociation commerciale, négociation achats, consulting négociation, stratégie de négociation, compétences négociation',
-  ogImage: 'https://negopros.fr/hero-image.png',
+  ogImage: 'https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
   ogType: 'website',
 };
 
