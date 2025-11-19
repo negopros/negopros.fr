@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Sun, Moon } from 'lucide-react';
+import { Menu, X, Sun, Moon, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '../ui/Button';
 import { useDarkMode } from '../../hooks/useDarkMode';
@@ -41,11 +41,10 @@ export const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center gap-3 group">
-            <img
-              src="/2de30a70-bfc5-4b3a-80b3-a507d1630af0_wm.png.jpeg"
-              alt="NegoPros Logo"
-              className="h-16 w-auto group-hover:scale-110 transition-transform"
-            />
+            <div className="flex items-center gap-2">
+              <Target className="w-10 h-10 text-[#D4AF37] group-hover:scale-110 transition-transform" />
+              <span className="text-2xl font-bold text-white">NegoPros</span>
+            </div>
           </Link>
 
           <div className="hidden lg:flex items-center gap-8">
