@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin, Youtube, Twitter, Target } from 'lucide-react';
+import { Linkedin, Youtube, Twitter, Instagram, Target } from 'lucide-react';
 import { Button } from '../ui/Button';
 import toast from 'react-hot-toast';
 import { newsletterService } from '../../lib/supabase';
@@ -44,6 +44,15 @@ export const Footer = () => {
             </Link>
             <p className="text-gray-300 text-sm mb-4">L'expertise négociation</p>
             <div className="flex gap-4">
+              <a
+                href="https://www.instagram.com/negopros_consulting/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 rounded-full bg-white/10 hover:bg-[#D4AF37] transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram className="w-5 h-5" />
+              </a>
               <a
                 href="#"
                 className="p-2 rounded-full bg-white/10 hover:bg-[#D4AF37] transition-colors"
