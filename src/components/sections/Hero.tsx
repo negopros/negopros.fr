@@ -83,7 +83,7 @@ export const Hero = () => {
           >
             <div className="relative w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl">
               <img
-                src="/hero-image.png"
+                src="https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
                 alt="NegoPros - Formation en négociation professionnelle"
                 className="w-full h-full object-cover"
               />
