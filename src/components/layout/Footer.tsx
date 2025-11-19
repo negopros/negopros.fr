@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Linkedin, Youtube, Twitter } from 'lucide-react';
+import { Linkedin, Youtube, Twitter, Target } from 'lucide-react';
 import { Button } from '../ui/Button';
 import toast from 'react-hot-toast';
 import { newsletterService } from '../../lib/supabase';
@@ -37,11 +37,10 @@ export const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 mb-12">
           <div>
             <Link to="/" className="flex items-center mb-6">
-              <img
-                src="/2de30a70-bfc5-4b3a-80b3-a507d1630af0_wm.png.jpeg"
-                alt="NegoPros Logo"
-                className="h-20 w-auto"
-              />
+              <div className="flex items-center gap-2">
+                <Target className="w-12 h-12 text-[#D4AF37]" />
+                <span className="text-3xl font-bold">NegoPros</span>
+              </div>
             </Link>
             <p className="text-gray-300 text-sm mb-4">L'expertise négociation</p>
             <div className="flex gap-4">
