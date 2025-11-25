@@ -40,6 +40,7 @@ Deno.serve(async (req: Request) => {
       customer_email: email,
       metadata: {
         productId,
+        productTitle: productName || '',
         email,
       },
     };
