@@ -1,6 +1,6 @@
 import 'jsr:@supabase/functions-js/edge-runtime.d.ts';
 import Stripe from 'npm:stripe@17.7.0';
-import { createClient } from 'npm:@supabase/supabase-js@2.49.1';
+import { createClient } from 'npm:@supabase/Bolt Database-js@2.49.1';
 
 const stripeSecret = Deno.env.get('STRIPE_SECRET_KEY')!;
 const stripeWebhookSecret = Deno.env.get('STRIPE_WEBHOOK_SECRET')!;
@@ -11,7 +11,7 @@ const stripe = new Stripe(stripeSecret, {
   },
 });
 
-const supabase = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
+const Bolt Database = createClient(Deno.env.get('SUPABASE_URL')!, Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!);
 
 Deno.serve(async (req) => {
   try {
@@ -126,8 +126,13 @@ async function handleEvent(event: Stripe.Event) {
           const productId = session.metadata?.productId || 'unknown';
           const productTitle = session.metadata?.productTitle || 'E-book NegoPros';
 
-          // Generate download URL (you'll need to implement this based on your storage)
-          const downloadUrl = `${Deno.env.get('SUPABASE_URL')}/storage/v1/object/public/ebooks/${productId}.pdf`;
+          // Generate correct download URL based on productId
+          let downloadUrl = 'https://negopros.fr/';
+          if (productId === 'negociation-pme') {
+            downloadUrl = 'https://negopros.fr/ebook_negociation_pme_2025.pdf';
+          } else if (productId === 'negociation-achats') {
+            downloadUrl = 'https://negopros.fr/ebook_negociation_acheteur_2025.pdf';
+          }
 
           // Queue the email
           const { error: emailError } = await supabase.from('email_queue').insert({
