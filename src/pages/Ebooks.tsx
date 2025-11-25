@@ -94,7 +94,7 @@ export function Ebooks() {
 
   const getDownloadUrl = () => {
     if (productId === 'negociation-pme') {
-      return '/ebook_negociation_pme (1).pdf';
+      return '/ebook_negociation_pme_2025.pdf';
     } else if (productId === 'negociation-achats') {
       return '/ebook_negociation_acheteur_2025.pdf';
     }
