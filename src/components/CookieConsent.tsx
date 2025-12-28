@@ -4,6 +4,13 @@ import { X, Cookie } from 'lucide-react';
 import { Button } from './ui/Button';
 import { Link } from 'react-router-dom';
 
+declare global {
+  interface Window {
+    gtag?: (...args: any[]) => void;
+    GA4_MEASUREMENT_ID?: string;
+  }
+}
+
 export const CookieConsent = () => {
   const [showBanner, setShowBanner] = useState(false);
 
@@ -14,11 +21,27 @@ export const CookieConsent = () => {
         setShowBanner(true);
       }, 1000);
       return () => clearTimeout(timer);
+    } else if (consent === 'accepted') {
+      initializeGA4();
     }
   }, []);
 
+  const initializeGA4 = () => {
+    if (window.gtag && window.GA4_MEASUREMENT_ID) {
+      window.gtag('consent', 'update', {
+        'analytics_storage': 'granted',
+        'ad_storage': 'denied'
+      });
+
+      window.gtag('config', window.GA4_MEASUREMENT_ID, {
+        send_page_view: false
+      });
+    }
+  };
+
   const handleAccept = () => {
     localStorage.setItem('cookieConsent', 'accepted');
+    initializeGA4();
     setShowBanner(false);
   };
 
