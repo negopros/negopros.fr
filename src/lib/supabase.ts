@@ -11,6 +11,24 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface Contact {
   id?: string;
+  name: string;
+  email: string;
+  phone?: string;
+  company?: string;
+  subject: string;
+  message: string;
+  status?: 'new' | 'in_progress' | 'contacted' | 'closed';
+  created_at?: string;
+  updated_at?: string;
+}
+
+export interface NewsletterSubscriber {
+  id?: string;
+  email: string;
+  status?: 'active' | 'unsubscribed';
+  subscribed_at?: string;
+  unsubscribed_at?: string;
+}
 
 export const contactService = {
   async create(contact: Omit<Contact, 'id' | 'created_at' | 'updated_at' | 'status'>) {
@@ -18,6 +36,10 @@ export const contactService = {
       .from('contacts')
       .insert([contact])
       .select()
+   .single();
+
+    if (error) throw error;
+    return data;
   },
 
   async getAll() {
@@ -25,6 +47,9 @@ export const contactService = {
       .from('contacts')
       .select('*')
       .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data;
   },
 
   async updateStatus(id: string, status: Contact['status']) {
@@ -32,6 +57,13 @@ export const contactService = {
       .from('contacts')
       .update({ status })
       .eq('id', id)
+.select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+};
 
 export const newsletterService = {
   async subscribe(email: string) {
@@ -39,13 +71,20 @@ export const newsletterService = {
       .from('newsletter_subscribers')
       .select('id, status')
       .eq('email', email)
-
+      .maybeSingle();
+    
     if (existing) {
       if (existing.status === 'unsubscribed') {
         const { data, error } = await supabase
           .from('newsletter_subscribers')
           .update({ status: 'active', unsubscribed_at: null })
           .eq('id', existing.id)
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data;
+      }
       throw new Error('Email already subscribed');
     }
 
@@ -53,6 +92,10 @@ export const newsletterService = {
       .from('newsletter_subscribers')
       .insert([{ email }])
       .select()
+      .single();
+
+    if (error) throw error;
+    return data;
   },
 
   async unsubscribe(email: string) {
@@ -60,6 +103,14 @@ export const newsletterService = {
       .from('newsletter_subscribers')
       .update({
         status: 'unsubscribed',
+        unsubscribed_at: new Date().toISOString()
+      })
+      .eq('email', email)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
   },
 
   async getAll() {
@@ -67,13 +118,38 @@ export const newsletterService = {
       .from('newsletter_subscribers')
       .select('*')
       .eq('status', 'active')
+      .order('subscribed_at', { ascending: false });
+
+    if (error) throw error;
+    return data;
+  },
+};
+
+export interface CRMLead {
+  id?: string;
+  email: string;
+  name?: string;
+  phone?: string;
+  company?: string;
+  lead_source: string;
+  lead_type: string;
+  status?: 'new' | 'contacted' | 'qualified' | 'converted' | 'lost' | 'nurturing';
+  notes?: string;
+  metadata?: Record<string, unknown>;
+  created_at?: string;
+  updated_at?: string;
+}
 
 export const crmService = {
   async createLead(lead: Omit<CRMLead, 'id' | 'created_at' | 'updated_at' | 'status'>) {
     const { data, error } = await supabase
       .from('crm_leads')
       .insert([lead])
-      .select()
+      .select() 
+      .single();
+
+    if (error) throw error;
+    return data;
   },
 
   async getAllLeads() {
@@ -81,6 +157,9 @@ export const crmService = {
       .from('crm_leads')
       .select('*')
       .order('created_at', { ascending: false });
+    
+    if (error) throw error;
+    return data;
   },
 
   async getLeadsBySource(source: string) {
@@ -88,6 +167,43 @@ export const crmService = {
       .from('crm_leads')
       .select('*')
       .eq('lead_source', source)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data;
+  },
+
+  async updateLeadStatus(id: string, status: CRMLead['status'], notes?: string) {
+    const updateData: Partial<CRMLead> = { status };
+    if (notes) updateData.notes = notes;
+
+
+    .from('crm_leads')
+      .update(updateData)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return data;
+  },
+};
+};
+
+export interface CRMLead {
+  id?: string;
+  email: string;
+  name?: string;
+  phone?: string;
+  company?: string;
+  lead_source: string;
+  lead_type: string;
+  status?: 'new' | 'contacted' | 'qualified' | 'converted' | 'lost' | 'nurturing';
+  notes?: string;
+  metadata?: Record<string, unknown>;
+  created_at?: string;
+  updated_at?: string;
+}
     const updateData: Partial<CRMLead> = { status };
     if (notes) updateData.notes = notes;
 
