@@ -188,7 +188,3 @@ const { data, error } = await supabase
     return data;
   },
 };
-    const { data, error } = await supabase
-      .from('crm_leads')
-      .update(updateData)
-      .eq('id', id)
