@@ -7,7 +7,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   throw new Error('Missing Bolt Database environment variables');
 }
 
-export const Bolt Database = createClient(supabaseUrl, supabaseAnonKey);
+export const boltDatabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
 export interface Contact {
   id?: string;
