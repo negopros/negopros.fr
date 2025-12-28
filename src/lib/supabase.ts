@@ -177,8 +177,8 @@ export const crmService = {
     const updateData: Partial<CRMLead> = { status };
     if (notes) updateData.notes = notes;
 
-
-    .from('crm_leads')
+const { data, error } = await supabase
+      .from('crm_leads')
       .update(updateData)
       .eq('id', id)
       .select()
@@ -188,25 +188,6 @@ export const crmService = {
     return data;
   },
 };
-};
-
-export interface CRMLead {
-  id?: string;
-  email: string;
-  name?: string;
-  phone?: string;
-  company?: string;
-  lead_source: string;
-  lead_type: string;
-  status?: 'new' | 'contacted' | 'qualified' | 'converted' | 'lost' | 'nurturing';
-  notes?: string;
-  metadata?: Record<string, unknown>;
-  created_at?: string;
-  updated_at?: string;
-}
-    const updateData: Partial<CRMLead> = { status };
-    if (notes) updateData.notes = notes;
-
     const { data, error } = await supabase
       .from('crm_leads')
       .update(updateData)
