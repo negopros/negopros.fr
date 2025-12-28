@@ -1,13 +1,13 @@
-import { createClient } from '@supabase/Bolt Database-js';
+import { createClient } from '@supabase/BoltDatabase-js';
 
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Missing Bolt Database environment variables');
+  throw new Error('Missing BoltDatabase environment variables');
 }
 
-export const Bolt Database = createClient(supabaseUrl, supabaseAnonKey);
+export const BoltDatabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export interface Contact {
   id?: string;
@@ -32,7 +32,7 @@ export interface NewsletterSubscriber {
 
 export const contactService = {
   async create(contact: Omit<Contact, 'id' | 'created_at' | 'updated_at' | 'status'>) {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('contacts')
       .insert([contact])
       .select()
@@ -43,7 +43,7 @@ export const contactService = {
   },
 
   async getAll() {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('contacts')
       .select('*')
       .order('created_at', { ascending: false });
@@ -53,7 +53,7 @@ export const contactService = {
   },
 
   async updateStatus(id: string, status: Contact['status']) {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('contacts')
       .update({ status })
       .eq('id', id)
@@ -67,7 +67,7 @@ export const contactService = {
 
 export const newsletterService = {
   async subscribe(email: string) {
-    const { data: existing } = await Bolt Database
+    const { data: existing } = await BoltDatabase
       .from('newsletter_subscribers')
       .select('id, status')
       .eq('email', email)
@@ -75,7 +75,7 @@ export const newsletterService = {
 
     if (existing) {
       if (existing.status === 'unsubscribed') {
-        const { data, error } = await Bolt Database
+        const { data, error } = await BoltDatabase
           .from('newsletter_subscribers')
           .update({ status: 'active', unsubscribed_at: null })
           .eq('id', existing.id)
@@ -88,7 +88,7 @@ export const newsletterService = {
       throw new Error('Email already subscribed');
     }
 
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('newsletter_subscribers')
       .insert([{ email }])
       .select()
@@ -99,7 +99,7 @@ export const newsletterService = {
   },
 
   async unsubscribe(email: string) {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('newsletter_subscribers')
       .update({
         status: 'unsubscribed',
@@ -114,7 +114,7 @@ export const newsletterService = {
   },
 
   async getAll() {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('newsletter_subscribers')
       .select('*')
       .eq('status', 'active')
@@ -142,7 +142,7 @@ export interface CRMLead {
 
 export const crmService = {
   async createLead(lead: Omit<CRMLead, 'id' | 'created_at' | 'updated_at' | 'status'>) {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('crm_leads')
       .insert([lead])
       .select()
@@ -153,7 +153,7 @@ export const crmService = {
   },
 
   async getAllLeads() {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('crm_leads')
       .select('*')
       .order('created_at', { ascending: false });
@@ -163,7 +163,7 @@ export const crmService = {
   },
 
   async getLeadsBySource(source: string) {
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('crm_leads')
       .select('*')
       .eq('lead_source', source)
@@ -177,7 +177,7 @@ export const crmService = {
     const updateData: Partial<CRMLead> = { status };
     if (notes) updateData.notes = notes;
 
-    const { data, error } = await Bolt Database
+    const { data, error } = await BoltDatabase
       .from('crm_leads')
       .update(updateData)
       .eq('id', id)
