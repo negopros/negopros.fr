@@ -1,7 +1,9 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Eye, BarChart, Target, Zap, CheckCircle2, Users } from 'lucide-react';
+import { Eye, BarChart, Target, Zap, CheckCircle2, Users, Lock } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Button } from '../components/ui/Button';
+import { LeadCaptureModal } from '../components/ui/LeadCaptureModal';
 import { Link } from 'react-router-dom';
 
 const impactPhases = [
@@ -520,6 +522,21 @@ const implementation = [
 ];
 
 export function Methode() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  useEffect(() => {
+    const unlocked = localStorage.getItem('methode_impact_unlocked');
+    if (unlocked === 'true') {
+      setIsUnlocked(true);
+    }
+  }, []);
+
+  const handleUnlockSuccess = () => {
+    localStorage.setItem('methode_impact_unlocked', 'true');
+    setIsUnlocked(true);
+  };
+
   return (
     <div className="min-h-screen pt-20 bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
@@ -543,11 +560,13 @@ export function Methode() {
               Un processus en 6 phases pour une négociation structurée et efficace
             </p>
             <div className="flex flex-wrap gap-4 justify-center">
-              <Link to="/contact">
-                <Button size="lg" className="bg-[#D4AF37] hover:bg-[#B8941F] text-[#1A3B5C]">
-                  Découvrir la méthode
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                className="bg-[#D4AF37] hover:bg-[#B8941F] text-[#1A3B5C]"
+                onClick={() => setIsModalOpen(true)}
+              >
+                Découvrir la méthode complète
+              </Button>
               <Link to="/contact">
                 <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                   Nous contacter
@@ -616,8 +635,76 @@ export function Methode() {
         </div>
       </section>
 
-      {/* Detailed Phases */}
-      {impactPhases.map((phase, phaseIndex) => {
+      {!isUnlocked ? (
+        <section className="py-20 bg-white dark:bg-gray-800">
+          <div className="container mx-auto px-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="relative bg-gradient-to-br from-[#1A3B5C] to-[#2C5F8D] rounded-3xl p-12 overflow-hidden">
+                <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS1vcGFjaXR5PSIwLjA1IiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30"></div>
+
+                <div className="relative text-center text-white">
+                  <div className="inline-flex items-center justify-center w-20 h-20 bg-[#D4AF37] rounded-full mb-6">
+                    <Lock className="w-10 h-10 text-[#1A3B5C]" />
+                  </div>
+
+                  <h2 className="text-4xl font-bold mb-4">
+                    Accédez à la méthode IMPACT complète
+                  </h2>
+
+                  <p className="text-xl text-gray-200 mb-8">
+                    Découvrez en détail les 6 phases de la méthodologie IMPACT,
+                    leurs composantes et comment les appliquer dans vos négociations.
+                  </p>
+
+                  <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 mb-8">
+                    <h3 className="text-2xl font-bold mb-4 text-[#D4AF37]">
+                      Ce que vous allez découvrir :
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
+                        <span>Les 6 composantes détaillées de chaque phase IMPACT</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
+                        <span>Des outils pratiques et méthodologies éprouvées</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
+                        <span>Le processus cyclique et continu d'IMPACT</span>
+                      </div>
+                      <div className="flex items-start gap-3">
+                        <CheckCircle2 className="w-6 h-6 text-[#D4AF37] flex-shrink-0 mt-1" />
+                        <span>Les bénéfices concrets pour votre organisation</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Button
+                    size="lg"
+                    className="bg-[#D4AF37] hover:bg-[#B8941F] text-[#1A3B5C] text-lg px-8 py-6"
+                    onClick={() => setIsModalOpen(true)}
+                  >
+                    Déverrouiller la méthode complète
+                  </Button>
+
+                  <p className="mt-6 text-sm text-gray-300">
+                    Accès gratuit et immédiat après inscription
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+      ) : (
+        <>
+          {/* Detailed Phases */}
+          {impactPhases.map((phase, phaseIndex) => {
         return (
           <section
             key={phaseIndex}
@@ -984,6 +1071,8 @@ export function Methode() {
           </div>
         </div>
       </section>
+        </>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 bg-white dark:bg-gray-800">
@@ -1051,6 +1140,17 @@ export function Methode() {
           </motion.div>
         </div>
       </section>
+
+      <LeadCaptureModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        leadSource="methode_impact"
+        leadType="information"
+        title="Déverrouiller la méthode IMPACT complète"
+        description="Entrez votre email pour accéder instantanément au contenu détaillé de la méthodologie IMPACT et découvrir comment transformer vos négociations."
+        buttonText="Accéder au contenu complet"
+        onSuccess={handleUnlockSuccess}
+      />
     </div>
   );
 }
